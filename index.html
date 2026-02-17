@@ -1,0 +1,554 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>GS Locações - Aluguel de Equipamentos</title>
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  
+  <style>
+    :root {
+      /* --- Paleta GS Locações --- */
+      /* Fundo/Destaque (Amarelo) */
+      --brand-yellow: #FFFF00; 
+      /* Títulos/Logo (Vermelho) */
+      --brand-red: #FF0000;    
+      /* Ação (Verde WhatsApp) */
+      --brand-green: #25D366;  
+      
+      /* Interface */
+      --bg-body: #F8FAFC;
+      --bg-white: #ffffff;
+      --text-main: #1a1a1a;
+      --text-light: #f8fafc;
+      
+      /* Sombras */
+      --shadow-sm: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+      --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+      --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.15);
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Poppins', sans-serif; }
+    
+    body { 
+      background-color: var(--bg-body); 
+      color: var(--text-main); 
+      line-height: 1.6; 
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+    }
+
+    /* --- HEADER (Vermelho) --- */
+    header { 
+      background: var(--brand-red); 
+      padding: 0.8rem 5%; 
+      display: flex; 
+      justify-content: space-between; 
+      align-items: center; 
+      position: sticky; 
+      top: 0; 
+      z-index: 1000; 
+      box-shadow: var(--shadow-md); 
+    }
+
+    .logo { 
+      font-size: 1.6rem; 
+      font-weight: 800; 
+      color: var(--bg-white); 
+      text-decoration: none; 
+      display: flex; 
+      align-items: center; 
+      gap: 12px; 
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+    
+    .logo i {
+      color: var(--brand-yellow); /* Ícone amarelo no fundo vermelho */
+    }
+
+    /* --- HERO SECTION (Amarelo Vibrante) --- */
+    .hero { 
+      /* Fundo Amarelo Sólido ou Gradiente Suave */
+      background: linear-gradient(135deg, #FFF700, #FFD700);
+      height: 55vh; 
+      min-height: 400px;
+      display: flex; 
+      justify-content: center; 
+      align-items: center; 
+      padding: 0 20px; 
+      margin-bottom: 0; 
+      padding-bottom: 5rem; 
+      position: relative;
+    }
+
+    /* Padrão de fundo opcional para textura */
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background-image: radial-gradient(#000 1px, transparent 1px);
+      background-size: 20px 20px;
+      opacity: 0.05;
+    }
+
+    .hero-content {
+      background: rgba(255, 255, 255, 0.85); 
+      backdrop-filter: blur(5px);
+      padding: 3rem 2rem;
+      border-radius: 20px;
+      border: 2px solid var(--brand-red); /* Borda vermelha para destaque */
+      max-width: 800px;
+      width: 100%;
+      text-align: center;
+      color: #000; /* Texto preto para contraste no amarelo */
+      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
+      animation: fadeUp 1s ease-out;
+      z-index: 1;
+    }
+
+    .hero h1 { 
+      font-size: 3.5rem; 
+      font-weight: 900; 
+      margin-bottom: 0.5rem; 
+      line-height: 1.1;
+      color: var(--brand-red); /* Título em Vermelho */
+      text-transform: uppercase;
+      text-shadow: 1px 1px 0px rgba(0,0,0,0.1);
+    }
+
+    .hero p {
+      font-size: 1.2rem; 
+      font-weight: 500;   
+      color: #333;
+      margin-bottom: 0;
+      max-width: 700px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(30px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* --- BARRA DE PESQUISA --- */
+    .search-wrapper {
+      background: transparent; 
+      padding: 0; 
+      margin: -35px auto 40px; 
+      position: relative;
+      z-index: 10;
+      max-width: 750px;
+      width: 90%;
+      display: flex;
+      justify-content: center;
+    }
+
+    .search-box {
+      display: flex;
+      align-items: center;
+      background: var(--bg-white);
+      border-radius: 50px; 
+      padding: 8px 20px;
+      width: 100%;
+      
+      /* Borda Vermelha Forte */
+      border: 3px solid var(--brand-red); 
+      
+      box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .search-box:focus-within {
+      transform: scale(1.01);
+      box-shadow: 0 15px 35px rgba(255, 0, 0, 0.15); 
+    }
+
+    .search-icon {
+      color: var(--brand-red); 
+      font-size: 1.2rem;
+      padding-right: 15px;
+    }
+
+    .search-input {
+      border: none;
+      background: transparent;
+      padding: 12px 0;
+      font-size: 1rem;
+      width: 100%;
+      outline: none;
+      color: #333;
+    }
+
+    /* --- CATÁLOGO --- */
+    .catalog { 
+      padding: 2rem 5%; 
+      display: grid; 
+      grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); 
+      gap: 2rem; 
+      max-width: 1200px; 
+      margin: 0 auto; 
+      flex-grow: 1;
+      width: 100%;
+    }
+
+    .no-results {
+      grid-column: 1 / -1;
+      text-align: center;
+      padding: 3rem;
+      color: #94a3b8;
+      font-size: 1.2rem;
+    }
+    
+    .product-card { 
+      background: var(--bg-white); 
+      border-radius: 16px; 
+      overflow: hidden; 
+      transition: all 0.3s ease; 
+      box-shadow: var(--shadow-sm); 
+      display: flex; 
+      flex-direction: column; 
+      border: 1px solid #eee;
+      animation: fadeIn 0.5s ease-out;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    
+    .product-card:hover { 
+      transform: translateY(-5px); 
+      box-shadow: var(--shadow-lg);
+      border-color: var(--brand-yellow); /* Detalhe amarelo ao passar o mouse */
+    }
+    
+    .product-img { 
+      height: 220px; 
+      background: #fff;
+      display: flex; 
+      align-items: center; 
+      justify-content: center; 
+      padding: 10px;
+      overflow: hidden;
+      border-bottom: 1px solid #f0f0f0;
+    }
+    
+    .product-img img { 
+      max-width: 100%; 
+      max-height: 100%; 
+      object-fit: contain; 
+      transition: transform 0.3s ease;
+    }
+
+    .product-card:hover .product-img img { transform: scale(1.05); }
+    
+    .product-info { 
+      padding: 1.5rem; 
+      text-align: center; 
+      flex-grow: 1; 
+      display: flex; 
+      flex-direction: column; 
+      justify-content: space-between;
+    }
+    
+    .product-info h3 {
+      font-size: 1.15rem;
+      color: #333;
+      margin-bottom: 1rem;
+      font-weight: 700;
+      line-height: 1.3;
+    }
+
+    .product-spec {
+      display: block; 
+      font-size: 0.9em;
+      color: #666;
+      font-weight: 400;
+      margin-top: 4px;
+    }
+    
+    /* Botão Verde (WhatsApp) */
+    .btn-rent { 
+      background: var(--brand-green); 
+      color: var(--bg-white); 
+      border: none; 
+      padding: 12px 20px; 
+      border-radius: 8px; 
+      cursor: pointer; 
+      width: 100%; 
+      font-weight: 700; 
+      text-decoration: none; 
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      transition: background 0.2s, transform 0.1s; 
+      box-shadow: 0 4px 6px rgba(37, 211, 102, 0.2);
+      text-transform: uppercase;
+    }
+    
+    .btn-rent:hover { background: #1da851; }
+    .btn-rent:active { transform: translateY(1px); }
+
+    /* --- FOOTER --- */
+    footer { 
+      background: #1a1a1a; 
+      color: #e2e8f0; 
+      padding: 4rem 5% 1.5rem; 
+      margin-top: 5rem; 
+      border-top: 5px solid var(--brand-red);
+    }
+    
+    .footer-content { 
+      display: grid; 
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); 
+      gap: 3rem; 
+      max-width: 1200px; 
+      margin: 0 auto; 
+    }
+    
+    .footer-section h4 { 
+      margin-bottom: 1.5rem; 
+      color: var(--brand-yellow); /* Títulos do footer em amarelo */
+      font-size: 1.2rem;
+      border-left: 4px solid var(--brand-red); 
+      padding-left: 10px;
+      font-weight: 700;
+    }
+    
+    .footer-section p {
+      margin-bottom: 0.8rem;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .footer-bottom { 
+      text-align: center; 
+      margin-top: 4rem; 
+      padding-top: 1.5rem; 
+      border-top: 1px solid rgba(255,255,255,0.1); 
+      font-size: 0.85rem; 
+      color: #94a3b8;
+    }
+
+    /* --- MODAL --- */
+    .modal { 
+      display: none; 
+      position: fixed; 
+      z-index: 2000; 
+      left: 0; 
+      top: 0; 
+      width: 100%; 
+      height: 100%; 
+      background: rgba(0, 0, 0, 0.8); 
+      backdrop-filter: blur(4px); 
+      overflow-y: auto;
+    }
+    
+    .modal-content { 
+      background: var(--bg-white); 
+      margin: 15vh auto; 
+      padding: 2.5rem; 
+      border-radius: 16px; 
+      width: 90%; 
+      max-width: 450px; 
+      text-align: center; 
+      box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+      position: relative;
+      animation: slideDown 0.3s ease-out;
+      border-top: 5px solid var(--brand-red);
+    }
+
+    .modal-content .btn-rent {
+      width: auto; 
+      padding: 14px 30px; 
+      min-width: 150px;
+    }
+
+    @keyframes slideDown {
+      from { transform: translateY(-50px); opacity: 0; }
+      to { transform: translateY(0); opacity: 1; }
+    }
+    
+    .modal-title { color: #333; font-weight: 700; margin-bottom: 1rem; }
+    
+    .btn-secondary {
+      background: transparent;
+      border: 2px solid #cbd5e1;
+      color: #666;
+      padding: 10px 20px;
+      border-radius: 8px;
+      cursor: pointer; 
+      font-weight: 600; 
+      margin-top: 15px;
+      transition: all 0.2s;
+    }
+    
+    .btn-secondary:hover {
+      border-color: #999;
+      background: #f1f5f9;
+      color: #333;
+    }
+    
+    /* --- MEDIA QUERIES --- */
+    @media (max-width: 768px) { 
+      .hero { padding: 5rem 1rem 3rem; height: auto; }
+      .hero h1 { font-size: 2.5rem; }
+      .hero-content { padding: 2rem 1.5rem; border-width: 1px; }
+      .product-img { height: 180px; }
+      .search-wrapper { margin-top: -30px; } 
+    }
+
+    @media (max-width: 480px) {
+      header { padding: 0.8rem 1rem; }
+      .logo { font-size: 1.2rem; }
+      .footer-content { grid-template-columns: 1fr; text-align: center; gap: 2rem; }
+      .footer-section h4 { border-left: none; border-bottom: 3px solid var(--brand-red); display: inline-block; padding-left: 0; padding-bottom: 5px; }
+      .footer-section p { justify-content: center; }
+      .modal-content .btn-rent { width: 100%; } 
+      .btn-secondary { width: 100%; }
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <a href="#" class="logo">
+      <i class="fas fa-hard-hat"></i> GS LOCAÇÕES
+    </a>
+  </header>
+
+  <section class="hero">
+    <div class="hero-content">
+      <h1>GS LOCAÇÕES</h1>
+      <p>Alugar fica bem mais barato! Equipamentos de qualidade para sua obra com rapidez e economia.</p>
+    </div>
+  </section>
+
+  <div class="search-wrapper">
+    <div class="search-box">
+      <i class="fas fa-search search-icon"></i>
+      <input type="text" id="searchInput" class="search-input" placeholder="O que você precisa hoje? (Ex: Martelete, Placa...)" onkeyup="filterProducts()">
+    </div>
+  </div>
+
+  <main class="catalog" id="catalog">
+    </main>
+
+  <footer>
+    <div class="footer-content">
+      <div class="footer-section">
+        <h4>GS Locações</h4>
+        <p>Especialistas em locação de equipamentos para construção e serviços gerais.</p>
+      </div>
+      <div class="footer-section">
+        <h4>Atendimento</h4>
+        <p><i class="fab fa-whatsapp" style="color: var(--brand-green)"></i> (99) 9 8169-0519</p>
+        <p><i class="fab fa-whatsapp" style="color: var(--brand-green)"></i> (99) 9 9114-8169</p>
+        <p><i class="far fa-envelope" style="color: var(--brand-red)"></i> gs.locacoes.construcao@gmail.com</p>
+      </div>
+      <div class="footer-section">
+        <h4>Links Rápidos</h4>
+        <p><a href="#" style="color:#cbd5e1; text-decoration:none; transition: color 0.2s;">Início</a></p>
+        <p><a href="#catalog" style="color:#cbd5e1; text-decoration:none; transition: color 0.2s;">Catálogo</a></p>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      &copy; 2026 GS Locações. Todos os direitos reservados.
+    </div>
+  </footer>
+
+  <div id="rentModal" class="modal">
+    <div class="modal-content">
+      <h3 id="modalTitle" class="modal-title">Solicitar Aluguel</h3>
+      <p style="margin: 15px 0; color: #64748b;">Você será redirecionado para o nosso WhatsApp para verificar a disponibilidade e finalizar o pedido.</p>
+      
+      <button id="confirmBtn" class="btn-rent">
+        <i class="fab fa-whatsapp"></i> Chamar no WhatsApp
+      </button>
+      <br>
+      <button onclick="closeModal()" class="btn-secondary">Cancelar</button>
+    </div>
+  </div>
+
+  <script>
+    // Número principal para contato WhatsApp (formato internacional)
+    const phoneNumber = '5599981690519';
+
+    const equipamentos = [
+      { nome: "Betoneira monofásica", spec: "(400 Lt.)", imagem: "https://img.lojadomecanico.com.br/IMAGENS/31/284/147417/1596113209096.JPG" },
+      { nome: "Cortadora de piso", spec: "(300 a 350mm)", imagem: "https://mestredaobralocacoes.com.br/wp-content/uploads/2023/07/cortadora-de-concreto-sm-100x100.png" },
+      { nome: "Placa vibratória", spec: "", imagem: "https://http2.mlstatic.com/D_NQ_NP_884393-MLA99503124248_112025-O.webp" },
+      { nome: "Martelete", spec: "(30kg)", imagem: "https://http2.mlstatic.com/D_Q_NP_890734-MLA100029105801_122025-O.webp" },
+      { nome: "Martelete", spec: "(10kg)", imagem: "https://http2.mlstatic.com/D_NQ_NP_604648-MLB89360783422_082025-O.webp" },
+      { nome: "Compactador", spec: "(sapinho)", imagem: "https://d26pdq3f5wxbiy.cloudfront.net/Custom/Content/Products/10/88/1088275_compactador-de-solo-a-gasolina-csm-srv620-weber-motor-honda-gxr120-4t-3-7cv-p15f085m030015_m1_638550175726244867.webp" },
+      { nome: "Martelete", spec: "(16kg)", imagem: "https://http2.mlstatic.com/D_NQ_NP_829964-MLA99953510541_112025-O.webp" }
+    ];
+
+    function renderProducts(list = equipamentos) {
+      const catalog = document.getElementById('catalog');
+      
+      if (list.length === 0) {
+        catalog.innerHTML = '<div class="no-results"><i class="fas fa-search" style="font-size: 2rem; margin-bottom: 10px; display:block"></i>Nenhum equipamento encontrado.</div>';
+        return;
+      }
+
+      catalog.innerHTML = list.map(item => `
+        <div class="product-card">
+          <div class="product-img">
+            <img src="${item.imagem}" alt="${item.nome}" loading="lazy" onerror="this.onerror=null; this.src='https://via.placeholder.com/300x200?text=Imagem+Indisponível';">
+          </div>
+          <div class="product-info">
+            <h3>
+              ${item.nome}
+              ${item.spec ? `<span class="product-spec">${item.spec}</span>` : ''}
+            </h3>
+            <button onclick="openModal('${item.nome} ${item.spec}')" class="btn-rent">
+              <i class="fab fa-whatsapp"></i> ALUGUE
+            </button>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    function filterProducts() {
+      const input = document.getElementById('searchInput').value.toLowerCase();
+      
+      const filtered = equipamentos.filter(item => {
+        const fullName = `${item.nome} ${item.spec}`.toLowerCase();
+        return fullName.includes(input);
+      });
+
+      renderProducts(filtered);
+    }
+
+    function openModal(productName) {
+      document.getElementById('modalTitle').innerText = "Alugar: " + productName;
+      document.getElementById('rentModal').style.display = "block";
+      document.getElementById('confirmBtn').onclick = function() {
+        const text = `Olá GS Locações! Gostaria de informações sobre o aluguel de: ${productName}`;
+        window.open(`https://wa.me/${phoneNumber}?text=${encodeURIComponent(text)}`, '_blank');
+        closeModal();
+      };
+    }
+
+    function closeModal() {
+      document.getElementById('rentModal').style.display = "none";
+    }
+
+    window.onclick = function(event) {
+      if (event.target == document.getElementById('rentModal')) closeModal();
+    }
+
+    renderProducts();
+  </script>
+</body>
+</html>
